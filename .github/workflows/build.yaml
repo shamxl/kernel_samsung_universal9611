@@ -1,7 +1,7 @@
 name: Build Kernel for A51 (AOSP)
 
 on:
-  workflow_dispatch:  # Allows manual trigger
+  workflow_dispatch:  # Manual trigger
 
 jobs:
   build:
@@ -9,7 +9,7 @@ jobs:
 
     steps:
     - name: Checkout kernel source
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Install dependencies
       run: |
