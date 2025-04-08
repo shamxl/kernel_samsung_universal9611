@@ -1,17 +1,15 @@
-name: Build Kernel
+name: Build Kernel for A51
 
 on:
-  push:
-    branches:
-      - main # Or the branch you want to build from
+  workflow_dispatch:  # Manual trigger for the workflow
 
 jobs:
   build:
-    runs-on: ubuntu-22.04 # Set the OS environment to Ubuntu 22.04 (you can choose a different version)
+    runs-on: ubuntu-22.04  # Set the OS environment to Ubuntu 22.04
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v3  # Checkout the repository code
 
     - name: Install dependencies
       run: |
@@ -39,5 +37,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: kernel-artifacts
-        path: ./output_directory # Replace with the actual output directory path
-        
+        path: ./output_directory # Replace with the actual output directory where the kernel image is stored
