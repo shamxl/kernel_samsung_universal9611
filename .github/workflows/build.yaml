@@ -1,40 +1,39 @@
-name: Build Kernel for A51
+name: Build Kernel for A51 (AOSP)
 
 on:
-  workflow_dispatch:  # Manual trigger for the workflow
+  workflow_dispatch:  # Allows manual trigger
 
 jobs:
   build:
-    runs-on: ubuntu-22.04  # Set the OS environment to Ubuntu 22.04
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3  # Checkout the repository code
+    - name: Checkout kernel source
+      uses: actions/checkout@v3
 
     - name: Install dependencies
       run: |
         sudo apt update
         sudo apt install -y bash git make libssl-dev curl bc pkg-config m4 libtool automake autoconf python3
 
-    - name: Clone the kernel repository
+    - name: Download and extract WeebX Clang
       run: |
-        git clone https://github.com/Gojikovi/kernel_samsung_universal9611
-        cd kernel_samsung_universal9611
+        wget "$(curl -s https://raw.githubusercontent.com/XSans0/WeebX-Clang/main/main/link.txt)" -O weebx-clang.tar.gz
+        rm -rf clang && mkdir clang
+        tar -xvf weebx-clang.tar.gz -C clang
+        rm -f weebx-clang.tar.gz
 
-    - name: Install toolchain (WeebX-Clang)
+    - name: Set up toolchain environment
       run: |
-        # Download and set up WeebX-Clang toolchain
-        curl -L https://github.com/XSans0/WeebX-Clang/releases/download/latest/weebx-clang.tar.xz -o weebx-clang.tar.xz
-        tar -xf weebx-clang.tar.xz
-        export PATH=$PWD/weebx-clang/bin:$PATH
+        echo "CLANG_PATH=$GITHUB_WORKSPACE/clang" >> $GITHUB_ENV
+        echo "$GITHUB_WORKSPACE/clang/bin" >> $GITHUB_PATH
 
     - name: Build the kernel
       run: |
-        cd kernel_samsung_universal9611
         python3 build_kernel.py --target=a51 --allow-dirty --aosp
 
-    - name: Upload Kernel Artifacts (optional)
-      uses: actions/upload-artifact@v3
+    - name: Upload compiled kernel
+      uses: actions/upload-artifact@v3.1.3
       with:
-        name: kernel-artifacts
-        path: ./output_directory # Replace with the actual output directory where the kernel image is stored
+        name: kernel-output
+        path: out/arch/arm64/boot/
