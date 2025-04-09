@@ -35,7 +35,7 @@ jobs:
     - name: Upload compiled kernel ZIP
       uses: actions/upload-artifact@v4
       with:
-        name: grasskernel-A51-oneui
+        name: GrassKernel-A51-OneUI
         path: GrassKernel_*.zip
 
   
