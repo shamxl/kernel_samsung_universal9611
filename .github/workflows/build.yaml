@@ -33,7 +33,7 @@ jobs:
         python3 build_kernel.py --target=a51 --allow-dirty --aosp
 
     - name: Upload compiled kernel ZIP
-      uses: actions/upload-artifact@v3.1.3
+      uses: actions/upload-artifact@v4
       with:
         name: kernel-flashable-zip
         path: GrassKernel_*.zip
