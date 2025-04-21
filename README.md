@@ -73,3 +73,5 @@ This is your kernel. Just flash it via TWRP or adb sideload
 [![Build Kernel for A51 (OneUI)](https://github.com/shamxl/kernel_samsung_universal9611/actions/workflows/build_oneui.yaml/badge.svg)](https://github.com/shamxl/kernel_samsung_universal9611/actions/workflows/build_oneui.yaml)
 
 Prebuilt kernels can be downloaded from the lastest workflow run
+
+_⚠️ the flashable zip is inside the zip file, unzip the downloaded file before flashing._
